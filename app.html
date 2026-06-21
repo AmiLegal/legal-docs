@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Am I Legal? — Download the App</title>
+<meta name="description" content="Download Am I Legal? for Android. iOS coming soon.">
+
+<!-- Fallback redirect for any browser, after 2.5s if JS is disabled -->
+<meta http-equiv="refresh" content="2.5;url=https://play.google.com/store/apps/details?id=com.amilegal.app">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #0a1f44;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 480px;
+    width: 100%;
+  }
+  .logo {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 24px;
+    display: block;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  h1 .gold { color: #f0b400; }
+  .status {
+    color: #cbd5e1;
+    font-size: 17px;
+    margin-bottom: 32px;
+    min-height: 56px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary {
+    background: #f0b400;
+    color: #0a1f44;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(240, 180, 0, 0.4);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.18); }
+  .spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(240, 180, 0, 0.3);
+    border-top-color: #f0b400;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .small {
+    margin-top: 32px;
+    color: #64748b;
+    font-size: 13px;
+  }
+  .small a { color: #f0b400; text-decoration: none; }
+  .small a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1a3a7a"/>
+        <stop offset="100%" stop-color="#0a1f44"/>
+      </linearGradient>
+    </defs>
+    <path d="M100 15 L170 40 L170 100 Q170 150 100 185 Q30 150 30 100 L30 40 Z" fill="url(#g)" stroke="#f0b400" stroke-width="4"/>
+    <text x="100" y="135" font-family="Georgia, serif" font-size="120" font-weight="bold" fill="#f0b400" text-anchor="middle">?</text>
+  </svg>
+
+  <h1>Am I <span class="gold">Legal?</span></h1>
+
+  <div id="status" class="status">
+    <span class="spinner"></span>Sending you to the app store…
+  </div>
+
+  <div id="actions">
+    <!-- buttons get filled in by JS based on device -->
+    <a href="https://play.google.com/store/apps/details?id=com.amilegal.app" class="btn btn-primary">
+      ▶ Get it on Google Play
+    </a>
+  </div>
+
+  <p class="small">
+    Or visit <a href="/">amilegal.net</a> for more info.
+  </p>
+</div>
+
+<script>
+(function() {
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPhone|iPad|iPod/.test(ua) && !/(Android)/.test(ua);
+  var isAndroid = /Android/.test(ua);
+  var statusEl = document.getElementById('status');
+  var actionsEl = document.getElementById('actions');
+  var playUrl = 'https://play.google.com/store/apps/details?id=com.amilegal.app';
+
+  if (isAndroid) {
+    // Android: redirect straight to Play Store after a brief moment
+    statusEl.innerHTML = '<span class="spinner"></span>Opening Google Play…';
+    setTimeout(function() { window.location.href = playUrl; }, 600);
+
+  } else if (isIOS) {
+    // iPhone/iPad: NO redirect — explain iOS isn't out yet
+    statusEl.innerHTML = '<strong style="color:#f0b400;">iOS version coming soon.</strong><br>In the meantime, check out our website or send the link to a friend with Android.';
+    actionsEl.innerHTML = ''
+      + '<a href="/" class="btn btn-primary">Learn more at amilegal.net</a>'
+      + '<a href="mailto:?subject=Check out Am I Legal&body=I think you\'d like this app for Android — quick reference for US state laws: ' + encodeURIComponent(playUrl) + '" class="btn btn-secondary">Email a friend</a>';
+
+  } else {
+    // Desktop / other: show the QR option + Play link
+    statusEl.innerHTML = '<strong>Open this page on your phone</strong> to install, or click below to view the Play Store listing.';
+    // Keep the existing Play Store button
+  }
+})();
+</script>
+
+</body>
+</html>
